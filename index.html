@@ -12,6 +12,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Refresh" content="120"> 
+    <meta http-equiv="Pragma" content="no-cache">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -40,7 +41,7 @@ $( document ).ready(function() {
             console.log(response.data)
             let mi= response.data;
             let unpaid = parseFloat(mi.unpaid)/1000000000000000000;
-            let price = parseFloat(mi.usdPerMin)*60*24*73;
+            let price = parseFloat(mi.usdPerMin)*105120;
             price=price.toFixed(5);
             $('#tbody').append(`<tr>
              <td>`+ names[cnt]+`</td>
@@ -52,7 +53,24 @@ $( document ).ready(function() {
     });
 
  });
+
+
+ function getData(prefix, url) {
+  $.getJSON(url, function(data) {
+    $.each(data, function(key, val) {
+      console.log("impotant")
+      console.log(data);
+      $("#EthRS").text(data.INR);
+      $("#EthUSD").text(data.USD)
+    });
+  });
+}
+getData('eth', 'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,INR,GBP');
+
 });
+
+
+
     </script>
 </head>
 
@@ -71,7 +89,14 @@ $( document ).ready(function() {
         </thead>
         <tbody id="tbody">
         </tbody>
-      </table>
+      </table><br>
+      <div class="panel panel-default">
+        <div class="panel-heading">Current Price</div>
+        <div class="panel-body" >Eth-INR :  <lable id="EthRS"></lable></div>
+        <div class="panel-body" >Eth-USD :  <label id="EthUSD"></label></div>
+      </div>
     </div>
+
+   
 </body>
 </html>
