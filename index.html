@@ -8,7 +8,7 @@
   crossorigin="anonymous"></script>
    
 
-    <title>Bootstrap Example</title>
+    <title>Farm Data</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Refresh" content="120"> 
@@ -32,43 +32,40 @@ $( document ).ready(function() {
     const names =["Common","Amit","Haider","Prashant"]
     let baseURl = "https://api.ethermine.org/miner"
     let cnt = 0; 
-    ids.forEach(id => {
 
-    let url = baseURl +"/"+id+"/"+"currentStats";
+ for(i=0;i<ids.length;i++)
+ {
+  let url = baseURl +"/"+ids[i]+"/"+"currentStats";
 
-    $.get(url, function(response){
-        console.log("data -= >")
-            console.log(response.data)
-            let mi= response.data;
-            let unpaid = parseFloat(mi.unpaid)/1000000000000000000;
-            let price = parseFloat(mi.usdPerMin)*105120;
-            price=price.toFixed(5);
-            $('#tbody').append(`<tr>
-             <td>`+ names[cnt]+`</td>
-            <td>`+ ids[cnt++]+`</td>
-            <td>`+ unpaid+`</td>
-            <td>`+ parseInt(mi.activeWorkers)+`</td>
-            <td>`+  price +`</td>
-           </tr>`);
-    });
+$.get(url, function(response){
+    console.log("data -= >")
+        console.log(response.data)
+        let mi= response.data;
+        let unpaid = (parseFloat(mi.unpaid)/1000000000000000000).toFixed(5);
+        let price = parseFloat(mi.usdPerMin)*105120;
+        price=price.toFixed(5);
+        $('#tbody').append(`<tr>
+         <td>`+ names[cnt]+`</td>
+        <td>`+ ids[cnt++].substring(0,8)+`</td>
+        <td>`+ unpaid+`</td>
+        <td>`+ parseInt(mi.activeWorkers)+`</td>
+        <td>`+  price +`</td>
+       </tr>`);
 
- });
-
-
+      });
+    };
+    
  function getData(prefix, url) {
   $.getJSON(url, function(data) {
     $.each(data, function(key, val) {
-      console.log("impotant")
-      console.log(data);
       $("#EthRS").text(data.INR);
       $("#EthUSD").text(data.USD)
     });
   });
 }
-getData('eth', 'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,INR,GBP');
+getData('eth', 'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,INR');
 
-});
-
+ });
 
 
     </script>
