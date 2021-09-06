@@ -23,6 +23,17 @@
 
 $( document ).ready(function() {
     console.log( "ready!" );
+var inrPrice = 0;
+ function getData(prefix, url) {
+  $.getJSON(url, function(data) {
+    $.each(data, function(key, val) {
+      $("#EthRS").text(data.INR);
+	  inrPrice = parseFloat(data.INR)
+      $("#EthUSD").text(data.USD)
+    });
+  });
+}
+getData('eth', 'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,INR');
 
     const ids = ["0xF3956B17a7F7192Fe5F633602B15468fF3cB239d",
                  "0xc52fDeecFE2C93A8402A7f939672F3dcB2E1bAE7",
@@ -41,7 +52,8 @@ $.get(url, function(response){
     console.log("data -= >")
         console.log(response.data)
         let mi= response.data;
-        let unpaid = (parseFloat(mi.unpaid)/1000000000000000000).toFixed(5);
+		let tempunpaid =(parseFloat(mi.unpaid)/1000000000000000000).toFixed(5);
+        let unpaid ="Eth : "+ tempunpaid + " || Rs "+ (tempunpaid*inrPrice).toFixed(2)
         let price = parseFloat(mi.usdPerMin)*105120;
         price=price.toFixed(5);
         $('#tbody').append(`<tr>
@@ -55,15 +67,7 @@ $.get(url, function(response){
       });
     };
     
- function getData(prefix, url) {
-  $.getJSON(url, function(data) {
-    $.each(data, function(key, val) {
-      $("#EthRS").text(data.INR);
-      $("#EthUSD").text(data.USD)
-    });
-  });
-}
-getData('eth', 'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,INR');
+
 
  });
 
@@ -73,7 +77,7 @@ getData('eth', 'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,
 
 <body>
     <div class="container">
-    <table  class="table" id="tableN">
+    <table  class="table table-striped"  id="tableN">
         <thead>
           <tr>
             
