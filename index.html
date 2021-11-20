@@ -73,6 +73,9 @@ $.get(url, function(response){
 
 
     </script>
+    <script src="https://widgets.coingecko.com/coingecko-coin-price-chart-widget.js"></script>
+    <script src="https://widgets.coingecko.com/coingecko-coin-list-widget.js"></script>
+
 </head>
 
 <body>
@@ -96,8 +99,9 @@ $.get(url, function(response){
         <div class="panel-body" >Eth-INR :  <lable id="EthRS"></lable></div>
         <div class="panel-body" >Eth-USD :  <label id="EthUSD"></label></div>
       </div>
+      <coingecko-coin-price-chart-widget currency="usd" coin-id="ethereum" locale="en" height="300"></coingecko-coin-price-chart-widget>
+      <coingecko-coin-list-widget  coin-ids="bitcoin,ethereum,eos,ripple,litecoin" currency="INR" locale="en"></coingecko-coin-list-widget>  
     </div>
 
-   
 </body>
 </html>
