@@ -102,11 +102,24 @@ $.get(url, function(response){
         <tbody id="tbody">
         </tbody>
       </table><br>
-      <div class="panel panel-default">
-        <div class="panel-heading">Current Price</div>
-        <div class="panel-body" >Eth-INR :  <lable id="EthRS"></lable></div>
-        <div class="panel-body" >Eth-USD :  <label id="EthUSD"></label></div>
-      </div>
+      <!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+  <div class="tradingview-widget-container__widget"></div>
+  <div class="tradingview-widget-copyright"><a href="https://in.tradingview.com/symbols/ETHUSDT/technicals/" rel="noopener" target="_blank"><span class="blue-text">Technical Analysis for ETHUSDT</span></a> by TradingView</div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+  {
+  "interval": "4h",
+  "width": 425,
+  "isTransparent": false,
+  "height": 450,
+  "symbol": "BINANCE:ETHUSDT",
+  "showIntervalTabs": true,
+  "locale": "in",
+  "colorTheme": "light"
+}
+  </script>
+</div>
+<!-- TradingView Widget END -->
       <coingecko-coin-price-chart-widget currency="usd" coin-id="ethereum" locale="en" height="300"></coingecko-coin-price-chart-widget>
       <coingecko-coin-list-widget  coin-ids="bitcoin,ethereum,eos,ripple,litecoin" currency="INR" locale="en"></coingecko-coin-list-widget>  
     </div>
