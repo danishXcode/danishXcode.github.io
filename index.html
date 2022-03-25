@@ -39,9 +39,10 @@ getData('eth', 'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,
                  "0xc52fDeecFE2C93A8402A7f939672F3dcB2E1bAE7",
                 "0xC8AB708EF0C2034995c7052363A056BeB67F6aD0",
                 "0x6608bFaC5ED0364056239CF6e0B26E478B6B6Cb1",
-		 "0x593A68868e6871DA159F4957B69c6f2Bc53e699d"
+		 "0x593A68868e6871DA159F4957B69c6f2Bc53e699d",
+		 "0x6D94305D8D800B68eAa4905f30677c182524Aee3"
                 ] 
-    const names =["Common","Amit","Haider","Prashant"]
+    const names =["Common","Amit","Haider","Prashant","Bumblebee"]
     let baseURl = "https://api.ethermine.org/miner"
     let cnt = 0; 
 
@@ -50,33 +51,53 @@ const test  = {
     "Amit": "0xc52fDeecFE2C93A8402A7f939672F3dcB2E1bAE7",
 	"Haider":"0xC8AB708EF0C2034995c7052363A056BeB67F6aD0",
 	"Prashant":"0x6608bFaC5ED0364056239CF6e0B26E478B6B6Cb1",
-	"Priyanka":"0x593A68868e6871DA159F4957B69c6f2Bc53e699d"
+	"Priyanka":"0x593A68868e6871DA159F4957B69c6f2Bc53e699d",
+	"Bumblebee":"0x6D94305D8D800B68eAa4905f30677c182524Aee3"
 };
 
 
  for (const [key, value] of Object.entries(test)) 
  {
   let url = baseURl +"/"+value+"/"+"currentStats";
+	if(key!= "Bumblebee"){
+	$.get(url, function(response){
+	    console.log("data -= >")
+		console.log(response.data)
+		let mi= response.data;
+			let tempunpaid =(parseFloat(mi.unpaid)/1000000000000000000).toFixed(5);
+		let unpaid ="Eth : "+ tempunpaid + " || Rs "+ (tempunpaid*inrPrice).toFixed(2)
+		let price = parseFloat(mi.usdPerMin)*105120;
+		price=price.toFixed(5);
+		$('#tbody').append(`<tr>
+		 <td>`+ key+`</td>
+		<td>`+ value.substring(0,8)+`</td>
+		<td>`+ unpaid+`</td>
+		<td>`+ parseInt(mi.activeWorkers)+`</td>
+		<td>`+  price +`</td>
+	       </tr>`);
 
-$.get(url, function(response){
-    console.log("data -= >")
-        console.log(response.data)
-        let mi= response.data;
-		let tempunpaid =(parseFloat(mi.unpaid)/1000000000000000000).toFixed(5);
-        let unpaid ="Eth : "+ tempunpaid + " || Rs "+ (tempunpaid*inrPrice).toFixed(2)
-        let price = parseFloat(mi.usdPerMin)*105120;
-        price=price.toFixed(5);
-        $('#tbody').append(`<tr>
-         <td>`+ key+`</td>
-        <td>`+ value.substring(0,8)+`</td>
-        <td>`+ unpaid+`</td>
-        <td>`+ parseInt(mi.activeWorkers)+`</td>
-        <td>`+  price +`</td>
-       </tr>`);
+	      });
+	    }
+        else{
+            $.get(url, function(response){
+	    console.log("data -= >")
+		console.log(response.data)
+		let mi= response.data;
+			let tempunpaid =(parseFloat(mi.unpaid)/1000000000000000000).toFixed(5);
+		let unpaid ="Eth : "+ tempunpaid + " || Rs "+ (tempunpaid*inrPrice).toFixed(2)
+		let price = parseFloat(mi.usdPerMin)*105120;
+		price=price.toFixed(5);
+		$('#tbody').append(`<tr>
+		 <td >`+ `<img src="https://img.icons8.com/office/16/000000/bumblebee.png"/>`+`</td>
+		<td>`+ value.substring(0,8)+`</td>
+		<td>`+ unpaid+`</td>
+		<td>`+ parseInt(mi.activeWorkers)+`</td>
+		<td>`+  price +`</td>
+	       </tr>`);
 
-      });
-    };
-    
+	      });
+    }
+ 	}
 
 
  });
